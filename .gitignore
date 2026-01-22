@@ -5,3 +5,6 @@ ai-engine/venv/
 # Python cache
 __pycache__/
 *.pyc
+
+# Database
+*.db

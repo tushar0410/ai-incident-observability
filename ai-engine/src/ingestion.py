@@ -2,6 +2,7 @@ import time
 import requests
 import pandas as pd
 from datetime import datetime
+from database import init_db, insert_incident
 
 PROMETHEUS_URL = "http://localhost:9090"
 
@@ -52,7 +53,7 @@ def detect_anomaly(value):
 
 def main():
     print("🚀 AI Metric Ingestion Service started")
-
+    init_db()
     while True:
         value = query_prometheus()
 
@@ -61,6 +62,7 @@ def main():
             print(f"[{datetime.utcnow().isoformat()}] CPU rate = {value:.5f}")
 
             if anomaly:
+                insert_incident(anomaly)
                 print("🚨 INCIDENT DETECTED:", anomaly)
 
         time.sleep(30)

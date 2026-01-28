@@ -2,7 +2,7 @@ import time
 import requests
 import pandas as pd
 from datetime import datetime
-from database import init_db, insert_incident
+from .database import init_db, insert_incident
 
 PROMETHEUS_URL = "http://monitoring-kube-prometheus-prometheus.monitoring:9090"
 

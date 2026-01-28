@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: incident-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: incident-api
+  template:
+    metadata:
+      labels:
+        app: incident-api
+    spec:
+      containers:
+        - name: incident-api
+          image: ai-incident-api:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          volumeMounts:
+            - name: incident-db
+              mountPath: /app/incidents.db
+      volumes:
+        - name: incident-db
+          persistentVolumeClaim:
+            claimName: incident-db-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: incident-api
+spec:
+  selector:
+    app: incident-api
+  ports:
+    - port: 80
+      targetPort: 8000

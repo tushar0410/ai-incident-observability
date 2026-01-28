@@ -4,7 +4,7 @@ import pandas as pd
 from datetime import datetime
 from database import init_db, insert_incident
 
-PROMETHEUS_URL = "http://localhost:9090"
+PROMETHEUS_URL = "http://monitoring-kube-prometheus-prometheus.monitoring:9090"
 
 # Cluster-wide CPU usage rate
 QUERY = 'sum(rate(container_cpu_usage_seconds_total[1m]))'

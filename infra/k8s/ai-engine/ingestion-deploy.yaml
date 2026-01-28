@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-ingestion
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-ingestion
+  template:
+    metadata:
+      labels:
+        app: ai-ingestion
+    spec:
+      containers:
+        - name: ai-ingestion
+          image: ai-ingestion:latest
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: incident-db
+              mountPath: /app/incidents.db
+      volumes:
+        - name: incident-db
+          persistentVolumeClaim:
+            claimName: incident-db-pvc
